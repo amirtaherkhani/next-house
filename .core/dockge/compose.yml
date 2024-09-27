@@ -1,0 +1,26 @@
+services:
+  dockge:
+    image: louislam/dockge:latest
+    restart: unless-stopped
+    container_name: dockge
+    hostname: dockge-server
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dockge.rule=Host(`dockge.next-hub.app`)
+      - traefik.http.routers.dockge.entrypoints=web, websecure
+      - traefik.http.routers.dockge.tls=true
+      - traefik.http.routers.dockge.tls.certresolver=letsencrypt
+      - traefik.http.services.dockge.loadBalancer.server.port=5001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
+      - /home/dev/next-house/.apps:/app/data/.apps
+    environment:
+      - DOCKGE_STACKS_DIR=/app/data/.apps
+   #   - APP_DIR=/home/dev/next-house/.apps
+    networks:
+      - traefik-network
+
+networks:
+  traefik-network:
+    external: true
