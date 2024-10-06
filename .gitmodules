@@ -1,0 +1,6 @@
+[submodule "core/mailserver"]
+	path = core/mailserver
+	url = https://github.com/amirtaherkhani/mailserver.git
+[submodule "core/traefik"]
+	path = core/traefik
+	url = https://github.com/amirtaherkhani/traefik.git
