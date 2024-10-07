@@ -1,0 +1,38 @@
+services:
+  vscoder:
+    image: codercom/code-server:latest
+    container_name: vscoder
+    hostname: vscode-server
+    privileged: true
+    stdin_open: true
+    user: ${UID}:${GID}
+    tty: true
+    environment:
+      - TZ:UTC
+      - HOST_NAME:${HOST_NAME}
+      - UID:${UID}
+      - GID:${GID}
+    volumes:
+      - ./data/.config:/home/coder/.config
+      - ./data:/home/coder/.local/share/code-server
+      - /home/dev:/home/coder
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vscoder.rule=Host(`${HOST_NAME}`)
+      - traefik.http.routers.vscoder.entrypoints=websecure
+      - traefik.http.routers.vscoder.tls=true
+      - traefik.http.routers.vscoder.tls.certresolver=letsencrypt
+      - traefik.http.services.vscoder.loadbalancer.server.port=8080
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -f http://localhost:8080 || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - traefik-network
+networks:
+  traefik-network:
+    external: true

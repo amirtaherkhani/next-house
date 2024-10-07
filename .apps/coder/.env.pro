@@ -1,0 +1,12 @@
+POSTGRES_USER=coder
+POSTGRES_DB=coder
+POSTGRES_PASSWORD=
+CODER_ACCESS_URL=https://coder.<domain-name>
+HOST_NAME=<domain-name>
+CODER_WILDCARD_ACCESS_URL=*.coder.<domain-name>
+postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@coder-db-server/${POSTGRES_DB}?sslmode=disable
+CODER_HTTP_ADDRESS=0.0.0.0:80
+CODER_ENV=production
+CODER_TLS_ENABLE=false
+CODER_TLS_ADDRESS=0.0.0.0:443
+CODER_REDIRECT_TO_ACCESS_URL=true
