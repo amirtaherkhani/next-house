@@ -16,6 +16,7 @@ services:
       - ./data/.config:/home/coder/.config
       - ./data:/home/coder/.local/share/code-server
       - /home/dev:/home/coder
+      - /etc/systemd/resolved.conf:/etc/systemd/resolved.conf
     labels:
       - traefik.enable=true
       - traefik.http.routers.vscoder.rule=Host(`${HOST_NAME}`)
